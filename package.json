@@ -8,7 +8,9 @@
     "node-nlp": "^4.3.0",
     "rhyme-plus": "^0.0.7",
     "sentence-tokenizer": "^1.0.1",
-    "syllable": "^4.0.1"
+    "string-strip-html": "^4.3.20",
+    "syllable": "^4.0.1",
+    "write": "^2.0.0"
   },
   "scripts": {
     "postinstall": "bash ./node_modules/rhyme-plus/data/fetch.sh"

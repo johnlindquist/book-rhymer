@@ -19,3 +19,10 @@
 
 [https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/composed/?module=/src/index.js](https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/composed/?module=/src/index.js) 
 
+
+## Done Ish 
+
+[https://github.com/johnlindquist/book-rhymer/tree/done-ish](https://github.com/johnlindquist/book-rhymer/tree/done-ish) 
+
+[https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/done-ish/?module=/src/index.js](https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/done-ish/?module=/src/index.js) 
+

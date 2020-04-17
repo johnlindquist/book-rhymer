@@ -4,6 +4,9 @@ let Tokenizer = require("sentence-tokenizer")
 let tokenizer = new Tokenizer("Chuck")
 let syllable = require("syllable")
 let rhyme = require('rhyme-plus')
+let write = require("write")
+let fs = require("fs")
+let stream = fs.createWriteStream("ulysses.txt", { flags: 'a' });
 
 let getAllChapters = callback => {
     console.log("getAllChapters")
@@ -73,6 +76,10 @@ let logValue = value => {
     console.log(value)
 }
 
+let writeToFile = value => {
+    stream.write(value + "\n")
+}
+
 let compose = (...fns) =>
     fns.reduceRight((prevFn, nextFn) =>
         (...args) => nextFn(prevFn(...args)),
@@ -83,14 +90,40 @@ let limitTo6Syllables = limitSentencesBySyllable(6)
 
 // findRhymes(getLastWords(limitTo6Syllables(getAllSentences(getAllChapters))))(logValue)
 
+let filterByRhymes = source => callback => {
+    source(value => {
+        let lastWords = value.map(sentence => {
+            let words = sentence.split(" ")
+
+            return words[words.length - 1].replace(/[^\w\s]/gi, '')
+        })
+
+        rhyme(r => {
+            let rhymes = new Set(r.findRhymes(lastWords).flat())
+            // console.log(rhymes)
+
+            rhymes.forEach(rhyme => {
+                value.forEach(sentence => {
+                    let words = sentence.split(" ")
+
+                    let lastWord = words[words.length - 1].replace(/[^\w\s]/gi, '')
+
+                    if (lastWord == rhyme) {
+                        callback(sentence)
+                    }
+                })
+            })
+        })
+
+    })
+}
+
 let operate = compose(
-    findRhymes,
-    getLastWords,
     filterByRhymes,
-    limitTo6Syllables,
+    limitSentencesBySyllable(8),
     getAllSentences
 )
 
-operate(getAllChapters)(logValue)
+operate(getAllChapters)(writeToFile)
 
 epub.parse()
