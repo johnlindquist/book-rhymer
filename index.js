@@ -5,7 +5,7 @@ let tokenizer = new Tokenizer("Chuck")
 let syllable = require("syllable")
 let rhyme = require('rhyme-plus')
 
-let getAllChapters = epub => callback => {
+let getAllChapters = callback => {
     epub.on("end", () => {
         epub.flow.forEach(chapter => {
             epub.getChapter(chapter.id, (error, text) => {
@@ -15,23 +15,48 @@ let getAllChapters = epub => callback => {
     })
 }
 
-getAllChapters(epub)(text => {
-    tokenizer.setEntry(text)
-
-    let sentences = tokenizer.getSentences().filter(sentence => {
-        let syllables = syllable(sentence)
-
-        return syllables === 6
+let getAllSentences = source => callback => {
+    source(value => {
+        tokenizer.setEntry(value)
+        callback(tokenizer.getSentences())
     })
+}
 
-    let lastWords = sentences.map(sentence => {
-        let words = sentence.split(" ")
-        return words[words.length - 1].replace(/[^\w\s]/gi, '')
+let limitSentencesBySyllable = count => source => callback => {
+    source(value => {
+        callback(value.filter(sentence => {
+            let syllables = syllable(sentence)
+
+            return syllables === count
+        }))
     })
-    // console.log(lastWords)
-    rhyme(r => {
-        console.log(r.findRhymes(lastWords))
+}
+
+let getLastWords = source => callback => {
+    source(value => {
+        value.map(sentence => {
+            let words = sentence.split(" ")
+            let lastWord = words[words.length - 1].replace(/[^\w\s]/gi, '')
+            callback(lastWord)
+        })
     })
-})
+}
+
+let findRhymes = source => callback => {
+    source(value => {
+        rhyme(r => {
+            callback(r.findRhymes(value))
+        })
+    })
+}
+
+let logValue = value => {
+    console.log(value)
+}
+
+
+let getAllRhymes = findRhymes(getLastWords(limitSentencesBySyllable(6)(getAllSentences(getAllChapters))))
+
+getAllRhymes(logValue)
 
 epub.parse()
