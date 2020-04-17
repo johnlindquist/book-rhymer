@@ -12,3 +12,10 @@
 
 [https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/composable-functions/?module=/src/index.js](https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/composable-functions/?module=/src/index.js) 
 
+
+## Composed 
+
+[https://github.com/johnlindquist/book-rhymer/tree/composed](https://github.com/johnlindquist/book-rhymer/tree/composed) 
+
+[https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/composed/?module=/src/index.js](https://codesandbox.io/embed/github/johnlindquist/book-rhymer/tree/composed/?module=/src/index.js) 
+
