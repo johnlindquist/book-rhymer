@@ -1,0 +1,16 @@
+{
+  "name": "book-rhymer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "epub": "^1.2.0",
+    "node-nlp": "^4.3.0",
+    "rhyme-plus": "^0.0.7",
+    "sentence-tokenizer": "^1.0.1",
+    "syllable": "^4.0.1"
+  },
+  "scripts": {
+    "postinstall": "bash ./node_modules/rhyme-plus/data/fetch.sh"
+  }
+}
